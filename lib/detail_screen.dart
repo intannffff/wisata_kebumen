@@ -1,28 +1,53 @@
 import 'package:flutter/material.dart';
+import 'package:wisata_kebumen/model/tourism_place.dart';
 
 class DetailScreen extends StatelessWidget {
-  const DetailScreen({Key? key}) : super(key: key);
+  final TourismPlace place;
+  const DetailScreen({Key? key, required this.place}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    const informationTextStyle = const TextStyle(fontFamily: 'Oxygen');
-
+    const informationTextStyle = TextStyle(fontFamily: 'Oxygen');
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              Image.asset('images/pantai menganti.jpg'),
+              Stack(
+                children: [
+                  Image.asset(place.imageAsset),
+                  Container(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          CircleAvatar(
+                            backgroundColor: Colors.grey[350],
+                            child: IconButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                icon: const Icon(
+                                  Icons.arrow_back,
+                                  color: Colors.white,
+                                )),
+                          ),
+                          const FavoriteButton()
+                        ],
+                      )),
+                ],
+              ),
               Container(
                 margin: const EdgeInsets.only(top: 16.0),
-                child: const Text(
-                  'Pantai Menganti',
+                child: Text(
+                  place.name,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontSize: 30.0,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'Staatliches'),
+                  style: const TextStyle(
+                    fontSize: 30.0,
+                    fontWeight: FontWeight.w600,
+                    fontFamily: 'Staatliches',
+                  ),
                 ),
               ),
               Container(
@@ -31,79 +56,83 @@ class DetailScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
                       Column(
-                        children: const <Widget>[
-                          Icon(Icons.calendar_today),
-                          SizedBox(height: 8.0),
-                          Text(
-                            'Open Everyday',
-                            style: informationTextStyle,
-                          ),
+                        children: <Widget>[
+                          const Icon(Icons.calendar_today),
+                          const SizedBox(height: 8.0),
+                          Text(place.openDays),
                         ],
                       ),
                       Column(
-                        children: const <Widget>[
-                          Icon(Icons.access_time),
-                          SizedBox(height: 8.0),
-                          Text(
-                            '07:00 - 19:00',
-                            style: informationTextStyle,
-                          ),
+                        children: <Widget>[
+                          const Icon(Icons.access_time),
+                          const SizedBox(height: 8.0),
+                          Text(place.openTime),
                         ],
                       ),
                       Column(
-                        children: const <Widget>[
-                          Icon(Icons.monetization_on),
-                          SizedBox(height: 8.0),
-                          Text(
-                            'Rp 15.000',
-                            style: informationTextStyle,
-                          ),
+                        children: <Widget>[
+                          const Icon(Icons.monetization_on),
+                          const SizedBox(height: 8.0),
+                          Text(place.ticketPrice),
                         ],
                       ),
                     ]),
               ),
               Container(
                 padding: const EdgeInsets.all(16.0),
-                child: const Text(
-                  "Pantai Menganti merupakan sebuah pantai yang berlokasi di Desa Karangduwur, Kecamatan Ayah, Kabupaten Kebumen, Jawa Tengah. Pantai ini merupakan salah satu pantai terindah di Jawa Tengah. Pasir pantainya yang berwarna putih serta terdapat panorama perbukitan juga tebing karst yang indah. Bentang alam berupa perbukitan memang sedikit menyulitkan untuk mengakses pantai ini. Sebelum mencapai pantai melalui jalan yang berlika-liku, meski demikian pemandangan tetap menakjubkan. Pegunungan karst yang indah berbukit kerucut, dan laut yang sesekali terlihat saat di atas jalan yang merayapi bukit.",
+                child: Text(
+                  place.description,
                   textAlign: TextAlign.justify,
-                  style: TextStyle(fontSize: 16.0, fontFamily: 'Oxygen'),
+                  style: const TextStyle(
+                    fontSize: 16.0,
+                    fontFamily: 'Oxygen',
+                  ),
                 ),
               ),
-              SizedBox(
+              Container(
                 height: 150,
                 child: ListView(
                   scrollDirection: Axis.horizontal,
-                  children: [
-                    Padding(
+                  children: place.imageUrls.map((url) {
+                    return Padding(
                       padding: const EdgeInsets.all(4.0),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(10),
-                        child: Image.network(
-                            'https://www.djkn.kemenkeu.go.id/files/images/2022/03/112.jpg'),
+                        child: Image.network(url),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: Image.network(
-                            'https://wisato.id/wp-content/uploads/2020/03/pantai-menganti-2-1024x577.jpg'),
-                      ),
-                    ),
-                    Padding(
-                        padding: EdgeInsets.all(4.0),
-                        child: ClipRRect(
-                            borderRadius: BorderRadius.circular(10),
-                            child: Image.network(
-                                'https://akcdn.detik.net.id/visual/2021/01/29/pantai-menganti-di-kebumen-jawa-tengah_169.jpeg?w=650')))
-                  ],
+                    );
+                  }).toList(),
                 ),
-              )
+              ),
             ],
           ),
         ),
       ),
+    );
+  }
+}
+
+class FavoriteButton extends StatefulWidget {
+  const FavoriteButton({super.key});
+
+  @override
+  State<FavoriteButton> createState() => _FavoriteButtonState();
+}
+
+class _FavoriteButtonState extends State<FavoriteButton> {
+  bool isFavorite = false;
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      icon: Icon(
+        isFavorite ? Icons.favorite : Icons.favorite_border,
+        color: Colors.red,
+      ),
+      onPressed: (() {
+        setState(() {
+          isFavorite = !isFavorite;
+        });
+      }),
     );
   }
 }
