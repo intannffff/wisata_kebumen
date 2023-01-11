@@ -1,16 +1,7 @@
-# wisata_kebumen
-
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+# Codelab 1 - Aplikasi Wisata Kebumen
+# Intan Nur Fadhilah
+ 3.34.21.2.11 <br>
+ IK2C <br>
+![Screenshot_20230111_231310](https://user-images.githubusercontent.com/92924377/211859984-7ca75949-245c-4cc6-a77b-308139f02354.png)
+![Screenshot_20230111_231332](https://user-images.githubusercontent.com/92924377/211859996-1304ad9d-c2ac-48fc-abb1-4ecf50b8f9d7.png)
+![Screenshot_20230111_231452](https://user-images.githubusercontent.com/92924377/211860004-3ea439c2-44be-4240-956d-ec139c3651d1.png)
