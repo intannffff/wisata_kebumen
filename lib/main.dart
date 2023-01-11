@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wisata_kebumen/detail_screen.dart';
+import 'package:wisata_kebumen/main_screen.dart';
 
 void main() => runApp(const MyApp());
 
@@ -11,7 +12,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         title: 'Kebumen Beriman',
         theme: ThemeData(),
-        home: const DetailScreen(),
+        home: const MainScreen(),
         debugShowCheckedModeBanner: false);
   }
 }
